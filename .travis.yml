@@ -1,4 +1,4 @@
-language: python
+language: ipython
 python:
   - "2.7"
 install:
