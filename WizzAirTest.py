@@ -1,32 +1,42 @@
+# -*- coding: utf-8" -*
 import unittest
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
-class SearchText(unittest.TestCase):
+valid_name = "Dick"
+valid_surname = "Laurent"
+telefon = "123123123"
+invalid_email = "hhjkj.pl"
+valid_password = "Qshiukk12"
+
+
+class WizzairRegistration(unittest.TestCase):
+
     def setUp(self):
-        # create a new Firefox session
-
         self.driver = webdriver.Chrome()
-        driver = self.driver
-        # driver.implicitly_wait(30)
-        driver.maximize_window()
-        # navigate to the application home page
-        driver.get("https://wizzair.com/pl-pl/main-page#/")
+        #self.driver.implicitly_wait(10)
+        self.driver.maximize_window()
 
-    def test_search_by_text(self):
+    def test_registration_wrong_email(self):
         driver = self.driver
-        # get the search textbox
-        search_field = driver.find_element_by_id("lst-ib")
-        search_field.clear()
-        # enter search keyword and submit
-        search_field.send_keys("Selenium")
-        sleep(5)
-        search_field.submit()
+        driver.get("https://wizzair.com/pl-pl/main-page#/")
+        zaloguj_btn = driver.find_element_by_css_selector("#app > header > div > nav > ul > li:nth-child(3) > button")
+        zaloguj_btn.click()
+        rejestracja_btn = driver.find_element_by_xpath('//*[@id="login-modal"]/form/div/p/button')
+        rejestracja_btn.click()
+        #imie_field =  driver.find_element_by_css_selector("#registration-modal > \
+        #form > div.modal-popup__content.register-form__content > div.register-form__name-field > \
+        #div.input-set__container.register-form__name-field__input.register-form__name-field__input--first > input")
+        imie_field = driver.find_element_by_xpath("//input[@placeholder='Imię']")
+        imie_field.send_keys(valid_name)
+
+
 
     def tearDown(self):
-        # close the browser window
-        self.driver.close()
+        self.driver.quit()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
